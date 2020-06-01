@@ -25,22 +25,25 @@ Airmon-ng sets the interface to monitor mode without issue
 
 The wireless interface does not register out of the box and I needed to install the driver from GitHub.
 
-1. sudo apt update
-2. sudo apt install build-essential bc libelf-dev linux-headers-`uname -r`
-3. sudo apt install dkms
-4. git clone -b v5.6.4.2 https://github.com/aircrack-ng/rtl8812au.git
-5. cd into the cloned folder
-6. sudo ./dkms-install.sh
-7. Watch dmesg (sudo dmesg -w) and after a few seconds, usbcore should respond with registering the new interface driver rtl88XXau and your wlan0 interface should be registered
+```bash
+sudo apt update
+sudo apt install build-essential bc libelf-dev linux-headers-`uname -r`
+sudo apt install dkms
+git clone -b v5.6.4.2 https://github.com/aircrack-ng/rtl8812au.git
+# cd into the cloned folder
+sudo ./dkms-install.sh
+# Watch dmesg (sudo dmesg -w) and after a few seconds, usbcore should respond with registering the new interface driver rtl88XXau and your wlan0 interface should be registered
+```
 
 #### *Monitor Mode*
 
 I'm assuming it's a driver conflict, but airmon-ng errors when you attempt to enable monitor mode on the wireless interface with this adapter. However, we can still set it manually.
 
-1. sudo ifconfig wlan0 down
-2. sudo iwconfig wlan0 mode monitor / manage
-3. sudo ifconfig wlan0 up
-
+```bash
+sudo ifconfig wlan0 down
+sudo iwconfig wlan0 mode monitor / manage
+sudo ifconfig wlan0 up
+```
 ### Not getting a prompt to connect to your host?
 When you connect your USB device to your host, you should get a prompt from VMWare if you want to connect the device to the host or to a virtual machine. If this happens, then chances are the 'VMware USB Arbitration Service' service is stopped (or the device is dead). You can troubleshoot this by seeing if your host system can see the device and/or try restarting the above service.
 
